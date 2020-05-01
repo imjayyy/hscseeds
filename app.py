@@ -246,8 +246,8 @@ def purchases():
             if len(_sale[i])>0:
                 querry[i] = _sale[i]
 
-        return render_template('purchases.html', arr=get_purchase(querry), form=form, redirect = redirect)
-    return render_template('purchases.html', arr=get_purchase(), form=form, redirect = redirect)
+        return render_template('purchase.html', arr=get_purchase(querry), form=form, redirect = redirect)
+    return render_template('purchase.html', arr=get_purchase(), form=form, redirect = redirect)
     
 @app.route("/variety/<product>")
 def product(product):
