@@ -215,9 +215,7 @@ def salesform():
                 "Total" : form.price.data,
                 "Warehouse" : form.warehouse.data,
                 "transaction" : form.transaction.data,
-                "Date": datetime.now() }
-        
-        
+                "Date": datetime.now() }        
         if update_inventory(form.product.data,form.variety.data,form.Brand.data, form.quan.data, form.warehouse.data):
             add_sales(_sale)
             flash("Sales Record Created.!!!", 'Success')
