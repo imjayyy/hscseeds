@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ 
+    <title>Home.!!!</title>
+    <div class="container-fluid">
+      {% include 'header.html' %} 
+    </div>
+    
+  </head>
+  <body>
+    <div class="w3-container w3-margin">
+        <div class="w3 row ">
+          <div class="w3-col s1"></div>
+
+          <div class="w3-col s5 w3-light-grey w3-hover-shadow" >
+            <div class="w3-card-4 w3-margin w3-green">
+              <img src="{{url_for('static', filename='buy.png')}}" class="w3-padding-16" >
+              <h2 >Today's Total Purchase: {{purchase_amount}}</h2>
+              <h1 class="w3-padding-16"></h1>
+            </div>
+          </div>
+
+          <div class="w3-col s5 w3-light-grey w3-hover-shadow">
+            <div class="w3-card-4 w3-margin w3-green">
+              <img src="{{url_for('static', filename='sell.png')}}" class="w3-padding-16" >
+              <h2 >Today's Total Sale: {{ sale_amount }}</h2>
+              <h1 class="w3-padding-16"></h1>
+
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="w3-container w3-margin">
+        <div class="w3 row ">
+          <div class="w3-col s1"></div>
+
+          <div class="w3-col s5 w3-light-grey w3-shadow" >
+            <div class="w3-card-4 w3-margin">
+                    <div class="container">
+                        <div class="w3-row w3-container w3-margin-right">
+                            <table class="w3-table w3-striped " >
+                                  <tr >
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product</td>
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Seed's Brand</td>
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Cost</td>
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Seller</td>
+                                 </tr>
+                                    {% for records in purchase_records %}
+                                  <tr>
+                                     <td class="w3-panel w3-border w3-round">{{records['Productname']}}</td>
+                                     <td class="w3-panel w3-border w3-round">{{records['Variety']}}</td>
+                                     <td class="w3-panel w3-border w3-round">{{records['Brand']}}</td>
+                                     <td class="w3-panel w3-border w3-round">{{records["total Amount"]}}</td>
+                                     <td class="w3-panel w3-border w3-round">{{records['Quantity']}}</td>
+                                     <td class="w3-panel w3-border w3-round">{{records["Company"]}}</td>
+                                 </tr>
+                                    {% endfor %}
+
+
+                            </table>
+
+                        </div>
+
+                    </div>
+               </div>
+          </div>
+<!-- <div class="w3-col s1"></div> -->
+          <div class="w3-col s5 w3-light-grey w3-shadow">
+            <div class="w3-card-4 w3-margin">
+                  <div class="container">
+                      <div class="w3-row w3-container w3-margin-right">
+
+                          <table class="w3-table w3-striped ">
+                                <tr >
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product</td>
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Seed's Brand</td>
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Amount</td>
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Buyer</td>
+                               </tr>
+                                  {% for records in sale_records %}
+                                <tr>
+                                   <td class="w3-panel w3-border w3-round">{{records['Productname']}}</td>
+                                   <td class="w3-panel w3-border w3-round">{{records['Variety']}}</td>
+                                   <td class="w3-panel w3-border w3-round">{{records['Brand']}}</td>
+                                   <td class="w3-panel w3-border w3-round">{{records["total"]}}</td>
+                                   <td class="w3-panel w3-border w3-round">{{records['Quantity']}}</td>
+                                   <td class="w3-panel w3-border w3-round">{{records["Company"]}}</td>
+                               </tr>
+                                  {% endfor %}
+
+
+                          </table>
+                      </div>
+
+                  </div>
+               </div>
+          </div>
+        </div>
+    </div>
+
+
+
+
+  </body>
+  </html>

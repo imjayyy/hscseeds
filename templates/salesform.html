@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home.!!!</title>
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+  <body>
+
+    {% for message in form.name.errors %}  
+         <div>{{ message }}</div>  
+      {% endfor %}  
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{message}}
+            </div>
+          {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+
+
+      {% include 'header.html' %}
+
+
+         <center>
+          <div class= "w3-card-4 w3-green">
+            <div class="w3-col-md-4"></div><br>
+              <div class="w3-col-md-4 w3-green container-fluid">
+                    <h1 >Add A Sale Record.!</h1><br>
+              </div>
+            </div>
+          </center> 
+
+    <div class="container-fluid">
+            <form method = "POST" class="w3-input">  
+           
+            {{ form.hidden_tag() }}  
+              
+            <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
+               <br>
+                <div class="w3-container">
+                  <div class="w3-row">
+                    <div class="w3-col s4">{{ form.product.label}} {{ form.product }} </div> 
+                    <div class="w3-col s4">{{ form.variety.label}} {{ form.variety }}  </div>
+                    <div class="w3-col s4">{{ form.Brand.label}}  {{ form.Brand }}  </div>
+                  </div></div><br>
+
+                <div class="w3-container">
+                  <div class="w3-row">
+               <div class="w3-col s4">{{ form.name.label}}   {{ form.name }}    </div>
+               <div class="w3-col s4">{{ form.city.label}}   {{ form.city }}  </div>
+               <div class="w3-col s4">{{ form.c_comp.label}} {{ form.c_comp }}  </div>
+             </div></div><br>
+
+                <div class="w3-container">
+                  <div class="w3-row">
+                     <div class="w3-col s4">{{ form.price.label}}  {{ form.price }} </div> 
+                     <div class="w3-col s4">{{ form.quan.label}}   {{ form.quan }}  </div>
+                     <div class="w3-col s4">{{ form.warehouse.label}}   {{ form.warehouse }} </div>
+                   </div></div>
+                    <div class="w3-col s4">{{ form.transaction.label}}   {{ form.transaction }} </div>
+
+                     <br>   
+               <br><button class="w3-button w3-green w3-hover-green">{{ form.submit }}</button>   
+               <br>  <br>
+            </div>  
+              
+         </fieldset>  
+      </form>  
+
+      <script type="text/javascript">
+        let product_select = document.getElementById('product');
+        let variety_select = document.getElementById('variety');
+
+        product_select.onchange = function(){
+
+          pro = product_select.value;
+          
+          fetch('/variety/' + pro).then(function(response){
+
+            response.json().then(function(data){
+              let optionhtml = '';
+
+              for (let v of data.variety){
+                optionhtml += '<option value = "' + v.value + '">' + v.name + '</option>';
+              }
+                variety_select.innerHTML = optionhtml;
+            });
+          });
+         };
+
+      
+
+        let comp = document.getElementById('Brand');
+
+        variety_select.onchange = function(){
+
+          pro = product_select.value;
+          varr = variety_select.value;
+
+          fetch('/Brand/' + pro + '/' + varr).then(function(response2){
+
+            response2.json().then(function(data2){
+              let optionhtml2 = '';
+
+              for (let c of data2.Brand){
+                optionhtml2 += '<option value = "' + c.value + '">' + c.name + '</option>';
+                console.log(c.name);
+              }
+                comp.innerHTML = optionhtml2;
+            });
+          });
+         } 
+
+      </script>
+
+    </div></body></html>
+
+
+
+
+
+</body>
+</html>     

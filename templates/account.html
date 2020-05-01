@@ -1,0 +1,103 @@
+{% include 'header.html' %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    {% for message in form.name.errors %}  
+         <div>{{ message }}</div>  
+      {% endfor %}  
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{message}}
+            </div>
+          {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <input type="submit" name="Payable" value="Payable">
+		<input type="submit" name="Receivable" value="Receivable">
+        
+
+        <form method = "POST" class="w3-input">  
+           
+            {{ form.hidden_tag() }}  
+              
+            <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
+               <br>
+                <div class="w3-container">
+                  <div class="w3-row">
+               <div class="w3-col s3"> {{ form.transaction.label}}   {{ form.transaction }}  </div>
+                    <div class="w3-col s3">{{ form.name.label}}   {{ form.name }}    </div>
+                    <div class="w3-col s3">{{ form.product.label}} {{ form.product }} </div> 
+                    <div class="w3-col s3">{{ form.variety.label}} {{ form.variety }}  </div>
+                    <br>
+                <div class="w3-row">
+                    <br>
+
+               <div class="w3-col s3">{{ form.city.label}}   {{ form.city }}  </div>
+               <div class="w3-col s3">{{ form.c_comp.label}} {{ form.c_comp }}  </div>
+               <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button>
+             </div>
+         </div>
+            </div>  
+              
+         </fieldset>  
+      </form>  
+
+
+<center><div class= "w3-card-4 w3-green w3-round">
+    <div class="w3-col-md-4"></div>
+    <div class="w3-col-md-4 w3-green container-fluid w3-round ">
+        <h1 >{{heading}}</h1>
+    </div>
+</div>
+</center>
+<div class="container">
+    <div class="row  w3-container w3-margin-right">
+        <div class="col-md-4 col-md-offset-4">
+        <center>
+        <table class="w3-table w3-striped  w3-margin w3-margin-right w3-margin-left">
+                <tr>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer Name </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product Name </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer's City </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
+			            <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Company name</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Total Price</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Date</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Transaction</td>
+
+
+                     </tr>
+            <tr>
+            {% for cl in arr %}
+
+
+               <td class="w3-panel w3-border w3-round">{{ cl['Name'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Productname'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['City'] }}</td>      
+               <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>               
+               <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Total'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%b-%Y') }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['transaction'] }}</td>
+
+               
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/logout">
+        <button type="button" class="btn btn-primary btn-block" onclick= "window.location.href={{ redirect(url_for('logout')) }};"> LOG OUT </button>
+        </a>
+                </center>
+
+
+    </div>
+
+    </div>
+</div>

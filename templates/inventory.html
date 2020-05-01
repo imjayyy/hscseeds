@@ -1,0 +1,52 @@
+    <div class="container-fluid">
+    	{% include 'header.html' %}<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<center><div class= "w3-card-4 w3-green">
+	<div class="w3-col-md-4"></div>
+	<div class="w3-col-md-4 w3-green container-fluid">
+		<h1 >Items In Your Inventory</h1>
+	</div>
+</div>
+</center>
+<div class="container ">
+    <div class="row w3-container w3-margin-right">
+        <div class="col-md-4 col-md-offset-4">
+        <center>
+        <table class="w3-table w3-striped w3-margin w3-margin-right w3-margin-left">
+                <!-- <col width="130">
+                <col width="130">
+                <col width="130"> -->
+                <tr >
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product Name </td>
+    					<td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Brand name</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Purchase Price</td>                        
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Warehouse</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Purchase Date</td>
+                     </tr>
+            <tr>	
+            {% for cl in arr %}
+
+               <td class="w3-panel w3-border w3-round">{{ cl['Productname'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>               
+               <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Purchase_price']) }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Warehouse'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%B-%Y') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+                </center>
+
+
+    </div>
+
+    </div>
+<!--             <a href="/logout">
+        <button type="button" class="btn btn-primary btn-block" onclick= "window.location.href={{ redirect(url_for('logout')) }};"> LOG OUT </button>
+        </a> -->
+</div>
