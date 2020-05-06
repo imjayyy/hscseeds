@@ -56,12 +56,14 @@
                     <div class="w3-col s4">{{ form.product.label}}  {{  form.product }} </div> 
                     <div class="w3-col s4">{{ form.variety.label}} {{   form.variety }} </div> 
                     <div class="w3-col s4">{{ form.Brand.label}}   {{ form.Brand }}   </div>
+                    <div class="w3-col s4">{{ form.phone.label}}   {{ form.phone }} </div>
+
                   </div>
                 <br>
                 <div class="w3-container">
                   <div class="w3-row">
                       <div class="w3-col s4">{{ form.name.label}}  {{ form.name }}  </div>
-                      <div class="w3-col s4">  {{ form.city.label}}   {{ form.city }}  </div>
+                      <div class="w3-col s4">  {{ form.country.label}}   {{ form.country }}  </div>
                       <div class="w3-col s4">  {{ form.c_comp.label}}  {{ form.c_comp }}</div>
                   </div>
                 </div>
@@ -74,7 +76,11 @@
                  <br>
                 <div class="w3-container">
                   <div class="w3-row" >
-                    <center><br><div> {{ form.transaction.label}}   {{ form.transaction }}  </div></center>
+                    <center><br><div> {{ form.transaction.label}}   {{ form.transaction }}  </div>
+                      <div class="w3-col s4">  {{ form.expiry.label}}  {{ form.expiry(placeholder='mm/dd/YYYY') }}  </div>
+                      <div class="w3-col s3"> {{ form.manufacture.label}}   {{ form.manufacture(placeholder='mm/dd/YYYY') }}  </div>
+
+                    </center>
                 
                  </div></div>
                  <br>
@@ -165,8 +171,10 @@
                 <div class="w3-container">
                   <div class="w3-row">
                    <div class="w3-col s4">{{ form_addnew.name.label}}  {{ form_addnew.name }}  </div>
-                   <div class="w3-col s4">{{ form_addnew.city.label}}  {{ form_addnew.city }}  </div>
+                   <div class="w3-col s4">{{ form_addnew.country.label}}  {{ form_addnew.country }}  </div>
                    <div class="w3-col s4">{{ form_addnew.c_comp.label}}  {{ form_addnew.c_comp }}</div>
+                   <div class="w3-col s4">{{ form.phone.label}}   {{ form.phone }} </div>
+
                   </div>
                 </div>
                 <br>
@@ -177,7 +185,11 @@
                    <div class="w3-col s4"> {{ form_addnew.quan.label  }} {{ form_addnew.quan }}    </div>
                  </div></div>
                   <br>
-                 <center><div> {{ form_addnew.transaction.label}}   {{ form_addnew.transaction }}  </div></center>
+                 <center><div> {{ form_addnew.transaction.label}}   {{ form_addnew.transaction }}  </div>
+                  <div class="w3-col s4">  {{ form_addnew.expiry.label}}  {{ form_addnew.expiry(placeholder='mm/dd/YYYY') }}  </div>
+                  <div class="w3-col s3"> {{ form_addnew.manufacture.label}}   {{ form_addnew.manufacture(placeholder='mm/dd/YYYY') }}  </div>
+
+                </center>
                    <br> <br>    
                  <input type="submit" name="Submit" value="Add Item">
                    <br>  <br>

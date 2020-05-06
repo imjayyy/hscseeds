@@ -17,9 +17,6 @@
           {% endif %}
         {% endwith %}
 
-        <input type="submit" name="Payable" value="Payable">
-		<input type="submit" name="Receivable" value="Receivable">
-        
 
         <form method = "POST" class="w3-input">  
            
@@ -29,16 +26,39 @@
                <br>
                 <div class="w3-container">
                   <div class="w3-row">
-               <div class="w3-col s3"> {{ form.transaction.label}}   {{ form.transaction }}  </div>
-                    <div class="w3-col s3">{{ form.name.label}}   {{ form.name }}    </div>
-                    <div class="w3-col s3">{{ form.product.label}} {{ form.product }} </div> 
-                    <div class="w3-col s3">{{ form.variety.label}} {{ form.variety }}  </div>
+                    <div class="w3-col s3">{{ form.name.label}} {{ form.name }} </div> 
+                    <div class="w3-col s3">{{ form.phone.label}} {{ form.phone }}  </div>
+                    <div class="w3-col s3">{{ form.c_comp.label}}  {{ form.c_comp }}  </div>
                     <br>
                 <div class="w3-row">
                     <br>
 
-               <div class="w3-col s3">{{ form.country.label}}   {{ form.country }}  </div>
-               <div class="w3-col s3">{{ form.c_comp.label}} {{ form.c_comp }}  </div>
+                    <div class="w3-col s3" style="width:'100px';">{{ form.description.label}}   {{ form.description }}    </div>
+
+                    <input type="submit" name="Add Sauda" value="Add Sauda">
+             </div>
+         </div>
+            </div>  
+              
+         </fieldset>  
+      </form>  </div>
+
+
+        <form method = "POST" class="w3-input">  
+           
+            {{ form.hidden_tag() }}  
+              
+            <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
+               <br>
+                <div class="w3-container">
+                  <div class="w3-row">
+                    <div class="w3-col s3">{{ form.name.label}} {{ form.name }} </div> 
+                    <div class="w3-col s3">{{ form.phone.label}} {{ form.phone }}  </div>
+                    <div class="w3-col s3">{{ form.c_comp.label}}  {{ form.c_comp }}  </div>
+                    <div class="w3-col s3">{{ form.description.label}}   {{ form.description }}    </div>
+                    <br>
+                <div class="w3-row">
+                    <br>
                <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button>
              </div>
          </div>
@@ -51,7 +71,7 @@
 <center><div class= "w3-card-4 w3-green w3-round">
     <div class="w3-col-md-4"></div>
     <div class="w3-col-md-4 w3-green container-fluid w3-round ">
-        <h1 >{{heading}}</h1>
+        <h1 >Sauda Records.!!!</h1>
     </div>
 </div>
 </center>
@@ -62,14 +82,11 @@
         <table class="w3-table w3-striped  w3-margin w3-margin-right w3-margin-left">
                 <tr>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer Name </td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product Name </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer's country </td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
-			            <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Phone</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Company name</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Total Price</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Description</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Date</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Transaction</td>
 
 
                      </tr>
@@ -78,14 +95,11 @@
 
 
                <td class="w3-panel w3-border w3-round">{{ cl['Name'] }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['Productname'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['country'] }}</td>      
-               <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>               
-               <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['Total'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Phone'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Company'] }}</td>               
+               <td class="w3-panel w3-border w3-round">{{ cl['Description'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%b-%Y') }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['transaction'] }}</td>
 
                
             </tr>

@@ -194,7 +194,7 @@ body>#home #main_section>.positional #resource_swirl {
     height: 323px;
     position: absolute;
     left: 299px;
-    opacity: 0.68;
+    opacountry: 0.68;
     top: 15px;
     width: 772px;
     z-index: 1;
@@ -294,8 +294,8 @@ body>#home #main_section>.positional>.positional h3 #learn_more {
     left: 11px;
     position: relative;
 }
-body>#home #main_section>.positional>.positional h3 #learn_more:hover { opacity: 0.9 }
-body>#home #main_section>.positional>.positional h3 #learn_more:hover span { opacity: 0.8 }
+body>#home #main_section>.positional>.positional h3 #learn_more:hover { opacountry: 0.9 }
+body>#home #main_section>.positional>.positional h3 #learn_more:hover span { opacountry: 0.8 }
 body>#home #main_section>.positional>.positional h3 #learn_more span {
     background-image: url(https://d2umsx3twley6r.cloudfront.net/assets/website/sprites-57e14dd7782dcbfa62637adc0ad5dba7.png);
     background-position: -131px -1px;
@@ -668,7 +668,7 @@ body>#home #everyone_section .positional .graphic#big_cloud {
     background-position: -532px -506px;
     height: 136px;
     left: 10px;
-    opacity: 0.9;
+    opacountry: 0.9;
     top: 20px;
     width: 258px;
     z-index: 1;
@@ -677,7 +677,7 @@ body>#home #everyone_section .positional .graphic#small_cloud {
     background-position: -1px -290px;
     height: 92px;
     left: 450px;
-    opacity: 0.75;
+    opacountry: 0.75;
     top: 190px;
     width: 167px;
     z-index: 1;
@@ -1350,7 +1350,7 @@ body>#signup #key_benefits p {
     z-index: 0;
 }
 #signup_form.locked input,
-#signup_form.locked button { opacity: 0.6 }
+#signup_form.locked button { opacountry: 0.6 }
 #signup_form.locked button { cursor: default }
 #signup_form.locked button:hover,
 #signup_form.locked button:active { background-color: rgba(102,229,46,0.1) }

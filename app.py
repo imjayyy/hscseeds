@@ -3,11 +3,14 @@ from datetime import datetime,timedelta
 from flask import (Flask, flash, jsonify, redirect, render_template, request,
                    session, url_for)
 
-from dbcon import (
+from dbcon import (db, sauda_,
     add_purchase, add_sales, addinform, addQuantity, get_comp, get_data,
     get_sales, get_variety, getTodaysPurchaserRecords, getTodaysSaleRecords,
     sform, addnewform, update_inventory, add_item, getOutOfStock, searchform,
     get_purchase, get_productname, db, getQuantityFromWh, getSalesOf6Months)
+
+# from flask.ext.paginate import Pagination
+# page, per_page, offset = get_page_items()  
 
 app = Flask(__name__)
 app.secret_key = 'loginner'
@@ -29,7 +32,7 @@ def account():
 
     column = ['Name Name',	
     "Product Name",	
-    "Name's City",
+    "Name's country",
     "Quantity",	
     "Variety",	
     "Company name",	
@@ -41,7 +44,7 @@ def account():
         if form.transaction.data == "Recievable":
             _sale = {"Name":form.name.data,
                     "Productname":form.product.data,
-                    "City": form.city.data,
+                    "country": form.country.data,
                     "Brand":form.Brand.data,
                     "Variety": form.variety.data,
                     "Company": form.c_comp.data,
@@ -56,7 +59,7 @@ def account():
         if form.transaction.data == "Payable":
             _sale = {"Name":form.name.data,
                     "Productname":form.product.data,
-                    "City": form.city.data,
+                    "country": form.country.data,
                     "Brand":form.Brand.data,
                     "Variety": form.variety.data,
                     "Company": form.c_comp.data,
@@ -120,7 +123,7 @@ def sales():
     if request.method == 'POST':
         _sale = {"Name":form.name.data,
                 "Productname":form.product.data,
-                "City": form.city.data,
+                "country": form.country.data,
                 "Brand":form.Brand.data,
                 "Variety": form.variety.data,
                 "Company": form.c_comp.data,
@@ -133,6 +136,39 @@ def sales():
         return render_template('sales.html', arr=get_sales(querry), form=form, redirect = redirect)
     return render_template('sales.html', arr=get_sales(), form=form, redirect = redirect)
 
+@app.route("/sauda"  , methods=['Post','GET'])
+def sauda():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    form = sform()
+    sauda = sauda_()
+
+    if (request.method == 'POST' and request.form.get('Submit') == 'Add Sauda'):
+                _sauda = {"Name":form.name.data,
+                "Phone":form.phone.data,
+                "country":form.country.data,
+                "Company": form.c_comp.data,
+                "Description": form.description.data,
+                "Date": datetime.today}
+                sauda.insert(_sauda)
+                return render_template('sauda.html', arr=sauda.find(), form=form, redirect = redirect)
+
+
+    if request.method == 'POST':
+        _sauda = {"Name":form.name.data,
+                "Phone":form.phone.data,
+                "country":form.country.data,
+                "Company": form.c_comp.data,
+                "Description": form.description.data,
+                "Date": datetime.today}
+        querry = {}
+        for i in (_sauda):
+            if len(_sauda[i])>0:
+                querry[i] = _sauda[i]
+
+        return render_template('sauda.html', arr=sauda.find(querry), form=form, redirect = redirect)
+    return render_template('sauda.html', arr=sauda.find(), form=form, redirect = redirect)
+
 @app.route("/addinventory" , methods=['Post','GET'])
 def addinventory():
     if not session.get('logged_in'):
@@ -142,16 +178,19 @@ def addinventory():
     form.product.choices = get_productname()
     form_addnew =  addnewform()   
     # if form.submit.data and form.validate_on_submit:
-    if request.form.get('Submit') == 'Submit': 
+    if request.form.get('Submit') == 'Submit' and form.validate_on_submit: 
         purchase = {
                 "Productname":form.product.data,
                 "Variety": form.variety.data,
                 "Brand":form.Brand.data,
                 "Name": form.name.data,
-                "City": form.city.data,
+                "country": form.country.data,
                 "Company": form.c_comp.data,
                 "Quantity": form.quan.data,
+                "Phone": form.phone.data,
                 "Total": form.price.data,
+                "expiry": form.expiry.data,
+                "manufacture":form.manufacture.data,
                 "transaction" : form.transaction.data,
                 "Date": datetime.now() 
                 }
@@ -166,15 +205,18 @@ def addinventory():
         else:
             flash("Could not find product in Inventory.!!!", 'ERROR')
 
-    if request.form.get('Submit') == 'Add Item':
+    if (request.form.get('Submit') == 'Add Item') and form_addnew.validate_on_submit:
         purchase = {"Productname":form_addnew.product.data,
                    "Variety": form_addnew.variety.data,
                    "Brand":form_addnew.Brand.data,
                     "Name": form_addnew.name.data,
-                    "City": form_addnew.city.data,
+                    "country": form_addnew.country.data,
+                    "Phone": form_addnew.phone.data,
                     "Company": form_addnew.c_comp.data,
                     "Quantity": form_addnew.quan.data,
                     "Total": form_addnew.price.data,
+                    "expiry": form_addnew.expiry.data,
+                    "manufacture":form_addnew.manufacture.data,
                     "transaction" : form_addnew.transaction.data,
                     "Date": datetime.now() }
 
@@ -207,11 +249,12 @@ def salesform():
     if request.method == 'POST':
         _sale = {"Name":form.name.data,
                 "Productname":form.product.data,
-                "City": form.city.data,
+                "country": form.country.data,
                 "Quantity": form.quan.data,
                 "Brand":form.Brand.data,
                 "Variety": form.variety.data,
                 "Company": form.c_comp.data,
+                "Phone": form.phone.data,
                 "Total" : form.price.data,
                 "Warehouse" : form.warehouse.data,
                 "transaction" : form.transaction.data,
@@ -236,7 +279,7 @@ def purchases():
     if request.method == 'POST':
         _sale = {"Name":form.name.data,
                 "Productname":form.product.data,
-                "City": form.city.data,
+                "country": form.country.data,
                 "Brand":form.Brand.data,
                 "Variety": form.variety.data,
                 "Company": form.c_comp.data,

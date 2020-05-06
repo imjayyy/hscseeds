@@ -3,7 +3,7 @@ from datetime import date, datetime,timedelta
 import pymongo
 from flask_wtf import FlaskForm
 from wtforms import (IntegerField, RadioField, SelectField, SubmitField,
-                     TextAreaField, TextField, ValidationError, validators)
+                     TextAreaField, TextField, ValidationError, validators, DateField)
 
 
 
@@ -29,6 +29,8 @@ class db():
     inventory = mydb["inventory"]
     sales = mydb["sales_records"]
     purchase = mydb["purchase_records"]
+    sauda = mydb["sauda"]
+    expense = mydb['expense']
 
 
 
@@ -132,13 +134,19 @@ class sform(FlaskForm): #Sales form class
     Brand = SelectField('Select Brand',[validators.DataRequired("Please Select Brand.")], choices = [])     
      
     name = TextField("Customer Name ",[validators.DataRequired("Please enter Name.")])
-    city = TextField("Customer City ",[validators.DataRequired("Please enter City.")])  
+    country = TextField("Customer country ",[validators.DataRequired("Please enter country.")])  
     c_comp = TextField("Company",[validators.DataRequired("Please enter customer's Brand name.")])  
-    price  = IntegerField("Selling Price",[validators.DataRequired("Please enter selling price.")])
+    price  = IntegerField("Selling Price (KG)",[validators.DataRequired("Please enter selling price.")])
+
+    description = TextField("Description",[validators.DataRequired("Please enter Description.")])
+
+
+    phone = IntegerField("Phone",[validators.DataRequired("Please enter Phone Number.")])
+
     quan = IntegerField("Quantity",[validators.DataRequired("Please enter Quantity in Kilograms.")])  
     warehouse = IntegerField("Warehouse #",[validators.DataRequired("Please enter Warehouse #.")])
 
-    transaction = SelectField('Select Debit/Credit',[validators.DataRequired("Please Select Debit/Credit.")], choices = [('Debit','Debit'),('Credit','Credit')])
+    transaction = SelectField('Select Cash/Credit',[validators.DataRequired("Please Select Cash/Credit.")], choices = [('Cash','Cash'),('Credit','Credit')])
   
     submit = SubmitField("Submit")  
 
@@ -150,12 +158,19 @@ class addinform(FlaskForm): #Form class for adding Quantity in existing item
     quan = IntegerField("Quantity",[validators.DataRequired("Please enter Quantity in Kilograms.")])  
 
     name = TextField("Name ",[validators.DataRequired("Please enter Name.")])
-    city = TextField("City ",[validators.DataRequired("Please enter City.")])  
+    country = TextField("country ",[validators.DataRequired("Please enter country.")])  
     c_comp = TextField("Company",[validators.DataRequired("Please enter customer's Brand name.")])  
+
+
+    expiry = DateField('Expiry Date', format='%m/%d/%Y')
+    manufacture = DateField('Manufacture Date', format='%m/%d/%Y')
+
 
     warehouse = IntegerField("Warehouse #",[validators.DataRequired("Please enter Warehouse.")])  
        
-    transaction = SelectField('Select Debit/Credit',[validators.DataRequired("Please Select Debit/Credit.")], choices = [('Debit','Debit'),('Credit','Credit')])
+    transaction = SelectField('Select Cash/Credit',[validators.DataRequired("Please Select Cash/Credit.")], choices = [('Cash','Cash'),('Credit','Credit')])
+
+    phone = IntegerField("Phone",[validators.DataRequired("Please enter Phone Number.")])
 
 
     submit = SubmitField("Submit")  
@@ -168,12 +183,16 @@ class addnewform(FlaskForm): #Form class for adding a new item in inventory
     price  = IntegerField("Purchase price per KG",[validators.DataRequired("Please enter price.")])
     quan = IntegerField("Quantity",[validators.DataRequired("Please enter Quantity.")])
     warehouse = IntegerField("Warehouse #",[validators.DataRequired("Please enter Warehouse.")])  
-   
+ 
+    expiry = DateField('Expiry Date', format='%m/%d/%Y')
+    manufacture = DateField('Manufacture Date', format='%m/%d/%Y')
+
     name = TextField("Name ",[validators.DataRequired("Please enter Name.")])
-    city = TextField("City ",[validators.DataRequired("Please enter City.")])  
+    country = TextField("country ",[validators.DataRequired("Please enter country.")])  
     c_comp = TextField("Company",[validators.DataRequired("Please enter customer's Brand name.")])  
 
-    transaction = SelectField('Select Debit/Credit',[validators.DataRequired("Please Select Debit/Credit.")], choices = [('Debit','Debit'),('Credit','Credit')])
+    transaction = SelectField('Select Cash/Credit',[validators.DataRequired("Please Select Cash/Credit.")], choices = [('Cash','Cash'),('Credit','Credit')])
+    phone = IntegerField("Phone",[validators.DataRequired("Please enter Phone Number.")])
 
     submit2 = SubmitField("Submit")
 
@@ -182,10 +201,10 @@ class searchform(FlaskForm): #Form class for adding a new item in inventory
     variety = TextField('Variety')
     Brand = TextField('Brand')      
     name = TextField("Buyer's Name ")
-    city = TextField("City")  
+    country = TextField("country")  
     c_comp = TextField("Company")  
 
-    transaction = SelectField('Select Debit/Credit', choices = [('','Both'),('Debit','Debit'),('Credit','Credit')])
+    transaction = SelectField('Select Cash/Credit', choices = [('','Both'),('Cash','Cash'),('Credit','Credit')])
 
     submit2 = SubmitField("Submit")
 
@@ -211,6 +230,7 @@ def getQuantityFromWh():
     arr.append(c)
     return arr
 
+
 def foo():
     def getLast6Month(days):
         return(datetime.now() - timedelta(days=days))
@@ -234,3 +254,5 @@ def getSalesOf6Months():
         tot.append(total)
     return (arr, tot)
 
+def sauda_():
+    return mydb["sauda"]
