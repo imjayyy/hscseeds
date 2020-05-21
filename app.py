@@ -417,7 +417,8 @@ def addinventory():
                     "expiry": datetime.strptime(request.form['expiry'], '%m/%d/%Y'),
                     "manufacture": datetime.strptime(request.form['manufacture'], '%m/%d/%Y'),
                     "transaction" : form_addnew.transaction.data,
-                    "Date": datetime.strptime(request.form['date'], '%m/%d/%Y') }
+                    "Date": datetime.strptime(request.form['date'], '%m/%d/%Y'),
+                    'Description': [] }
 
         dicts = {
                 "Productname" : form_addnew.product.data, 
@@ -466,7 +467,8 @@ def salesform():
                 "Phone": str(form.phone.data),
                 "Total" : form.price.data,
                 "transaction" : form.transaction.data,
-                "Date": datetime.strptime(request.form['date'], '%m/%d/%Y') }
+                "Date": datetime.strptime(request.form['date'], '%m/%d/%Y'),
+                'Description': [] }
 
         if form.transaction.data =='Credit':
             _sale['amount_remaining'] = _sale['Total']
@@ -668,7 +670,7 @@ def transaction(ID, account):
     'Total', 'PriceperKG', 'expiry', 
     'manufacture', 'transaction', 'Date', 
     'amount_remaining', 'amount_paid']
-    
+        
     if account == 'Recieve':
         var = 'Sales'
         cursor = db.sales.find_one({'_id': ObjectId(ID)} )
