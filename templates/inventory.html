@@ -2,6 +2,15 @@
     	{% include 'header.html' %}<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+<form method = "POST" class="w3-input">  
+<p class="w3-col s3">Product:  <input type="text" name="Product" ></p>
+<p class="w3-col s3">Variety: <input type="text" name="Variety"></p>                    
+<p class="w3-col s3">Brand: <input type="text" name="Brand"></p>           
+<button type="submit" name="Search" value="Search">Search</button> 
+<br><br>
+</form>
+
+
 <center><div class= "w3-card-4 w3-green">
 	<div class="w3-col-md-4"></div>
 	<div class="w3-col-md-4 w3-green container-fluid">
@@ -22,8 +31,9 @@
     					<td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Brand name</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Purchase Price</td>                        
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Warehouse</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Purchase Price/KG</td>                        
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Current cost</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Total Purchase Price</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Purchase Date</td>
                      </tr>
             <tr>	
@@ -33,14 +43,16 @@
                <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>               
                <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
-               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Purchase_price']) }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['Warehouse'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['PriceperKG']) }}</td>
+               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Quantity']*cl["PriceperKG"]) }}</td>
+               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Total']) }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%B-%Y') }}</td>
             </tr>
             {% endfor %}
         </table>
 
                 </center>
+                <div class="pagination">{{ pagination.links }}</div>
 
 
     </div>

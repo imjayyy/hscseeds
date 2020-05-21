@@ -25,15 +25,15 @@
           <div class="w3-col s5 w3-light-grey w3-hover-shadow" >
             <div class="w3-card-4 w3-margin w3-green">
               <img src="{{url_for('static', filename='buy.png')}}" class="w3-padding-16" >
-              <h2 >Today's Total Purchase: {{purchase_amount}}</h2>
-              <h1 class="w3-padding-16"></h1>
+              <h2 >{{var1}} {{purchase_amount}}</h2>
+              <h1 class="w3-padding-16"></h1> 
             </div>
           </div>
 
           <div class="w3-col s5 w3-light-grey w3-hover-shadow">
             <div class="w3-card-4 w3-margin w3-green">
               <img src="{{url_for('static', filename='sell.png')}}" class="w3-padding-16" >
-              <h2 >Today's Total Sale: {{ sale_amount }}</h2>
+              <h2 >{{var2}} {{ sale_amount }}</h2>
               <h1 class="w3-padding-16"></h1>
 
             </div>
@@ -66,7 +66,7 @@
                                      <td class="w3-panel w3-border w3-round">{{records['Productname']}}</td>
                                      <td class="w3-panel w3-border w3-round">{{records['Variety']}}</td>
                                      <td class="w3-panel w3-border w3-round">{{records['Brand']}}</td>
-                                     <td class="w3-panel w3-border w3-round">{{records["total Amount"]}}</td>
+                                     <td class="w3-panel w3-border w3-round">{{(records["total Amount"])}}</td>
                                      <td class="w3-panel w3-border w3-round">{{records['Quantity']}}</td>
                                      <td class="w3-panel w3-border w3-round">{{records["Company"]}}</td>
                                  </tr>

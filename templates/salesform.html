@@ -55,6 +55,8 @@
                     <div class="w3-col s4">{{ form.product.label}} {{ form.product }} </div> 
                     <div class="w3-col s4">{{ form.variety.label}} {{ form.variety }}  </div>
                     <div class="w3-col s4">{{ form.Brand.label}}  {{ form.Brand }}  </div>
+                    <div class="w3-col s4">{{ form.expiry.label}}  {{ form.expiry }}  </div>
+
                   </div></div><br>
 
                 <div class="w3-container">
@@ -66,12 +68,12 @@
 
                 <div class="w3-container">
                   <div class="w3-row">
-                     <div class="w3-col s4">{{ form.price.label}}  {{ form.price }} </div> 
+                     <div class="w3-col s4">Total Price  {{ form.price }} </div> 
                      <div class="w3-col s4">{{ form.quan.label}}   {{ form.quan }}  </div>
-                     <div class="w3-col s4">{{ form.warehouse.label}}   {{ form.warehouse }} </div>
                    </div></div>
                     <div class="w3-col s4">{{ form.transaction.label}}   {{ form.transaction }} </div>
                     <div class="w3-col s4">{{ form.phone.label}}   {{ form.phone }} </div>
+                    <div class="w3-col s3"> Date:   <input type="text" name ="date" class="datepicker">  </div>
                      <br>   
                <br><button class="w3-button w3-green w3-hover-green">{{ form.submit }}</button>   
                <br>  <br>
@@ -123,6 +125,25 @@
             });
           });
          } 
+
+         let expiry_select = document.getElementById('expiry');
+
+         comp.onchange = function(){
+              pro = product_select.value;
+              varr = variety_select.value;
+              brandd = comp.value;
+              console.log(brandd);
+              fetch('/expiry/' + pro + '/' + varr + '/' + brandd).then(function(response3){
+                response3.json().then(function(data3){
+                  let optionhtml3 = '';
+                  for (let c of data3.expiry){
+                    optionhtml3 += '<option value = "' + c.value + '">' + c.name + '</option>';
+                    console.log(c.name);
+                  }
+                  expiry_select.innerHTML = optionhtml3;
+                });
+              });
+              } 
 
       </script>
 

@@ -4,6 +4,35 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<link rel="stylesheet" href="/resources/demos/style.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet" type="text/css" href="/Content/font-awesome/css/font-awesome.min.css" >
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+  $( ".datepicker" ).datepicker();
+} );
+</script>
+<style>
+	.pagination-page-info {
+		padding: .6em;
+		padding-left: 0;
+		width: 40em;
+		margin: .5em;
+		margin-left: 0;
+		font-size: 12px;
+	}
+	.pagination-page-info b {
+		color: black;
+		padding-left: 2px;
+		padding: .1em .25em;
+		font-size: 150%;
+	}
+</style>
+
 <body>
     <div class="w3-card-4 w3-green" style="width:100%;">
       <div class="w3-container w3-center ">
@@ -16,6 +45,8 @@
 				  <a href="/salesform"><button class="w3-button w3-">Add A Sale Records</button></a>
 				  <a href="/addinventory"><button class="w3-button w3-">Add Item in Inventory</button></a>
 				  <a href="/sauda"><button class="w3-button w3-">Sauda</button></a>
+				  <a href="/expenses"><button class="w3-button w3-">Expenses</button></a>
+
 				  
 				  <a href="/account"><button class="w3-button w3-">Account</button></a>
 				  <a href="/logout"><button class="w3-button w3-">Logout</button></a>
@@ -23,6 +54,16 @@
       	</div>
     </div>
   </div>
+
+  <div class="w3-bar w3-center">
+	<div class="w3-bar w3-center w3-green">
+	  <a href="/reports"><button href="/" class="w3-button w3-">Today's Reports</button></a>
+	  <a href="/restock"><button href="/" class="w3-button w3-">Out Of Stock/About to Expire</button></a>
+	  <a href="/purchases"><button class="w3-button w3-">View Purchases</button></a>
+	  <a href="/sales"><button class="w3-button w3-">View Sale Records</button></a>
+		</div>
+</div>
+
 <br><br>
 
 </body>

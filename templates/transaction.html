@@ -1,0 +1,42 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<center>
+    <h1 class="w3-panel w3-border-green w3-round w3-topbar w3-bottombar "> 
+        {{ var }} Record:
+    </h1>
+</center>
+<center>
+<table>
+    <td>
+        <h2> Order Details:</h2>     
+        <ul class="w3-panel w3-border-green w3-round w3-topbar w3-bottombar "> 
+            {% for cl in arr2 %}
+            {{cl}} : {{arr[cl]}}
+            <br>
+            {% endfor %}
+        </ul>
+    </td>
+</table>
+</center>
+
+<center>
+    <table>
+        <td>     <h2>Transactions : </h2><button onclick="javascript:pdfdown()"> Print Receipt </button>
+            <ul class="w3-panel w3-border-green w3-round w3-topbar w3-bottombar "> 
+                {% for cl in desc %}
+                    <li>{{cl}}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </table>
+    
+    </center>
+
+<script type="text/javascript">
+    function pdfdown(_id){
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'file.pdf';
+    link.dispatchEvent(new MouseEvent('click'));
+    };
+</script>

@@ -2,20 +2,14 @@ from datetime import date, datetime,timedelta
 
 import pymongo
 from flask_wtf import FlaskForm
-from wtforms import (IntegerField, RadioField, SelectField, SubmitField,
-                     TextAreaField, TextField, ValidationError, validators, DateField)
+from wtforms import (IntegerField, RadioField, SelectField, SubmitField,DecimalField,
+                     TextAreaField, TextField, ValidationError, validators, DateField, DateTimeField)
 
 
 
 
 today = date.today().strftime("%d/%m/%Y")
-sample = {"Productname":"Productname",
-"Quantity": 123,
-"Variety": "variety",
-"Brand": "Brand",
-"Purchase_Price" : 2.1,
-"Date": today
-}
+
 
 myclient = pymongo.MongoClient("mongodb+srv://mujtaba:developer@hsc-vp2me.mongodb.net/test?retryWrites=true&w=majority")
 
@@ -24,8 +18,10 @@ mydb = myclient["HSC"]
 inventory = mydb["inventory"]
 sales = mydb["sales_records"]
 purchase = mydb["purchase_records"]
+sauda = mydb["sauda"]
+expense = mydb['expense']
 
-class db():
+class db:
     inventory = mydb["inventory"]
     sales = mydb["sales_records"]
     purchase = mydb["purchase_records"]
@@ -34,12 +30,16 @@ class db():
 
 
 
-def update_inventory(product, variety, brand, quantity, warehouse): #Subtracting Quantity in existing item (When there is a Sale) 
-    arr = inventory.find({"Productname":product,"Variety": variety,"Brand":brand, "Warehouse": int(warehouse)} )
+def inventoryfunc():
+    return mydb["inventory"]
+
+def update_inventory(product, variety, brand, quantity, exp): #Subtracting Quantity in existing item (When there is a Sale) 
+    arr = inventory.find({"Productname":product,"Variety": variety,"Brand":brand, "expiry": datetime.strptime(exp, "%a, %d %b %Y %H:%M:%S %Z")} ) 
     new_quantity = arr[0]['Quantity'] - quantity
     if new_quantity < 0:
         return False
     result = inventory.update_one({"Productname":product,"Variety": variety,"Brand":brand} ,{ '$set' : {'Quantity': (new_quantity) } })
+    inventory.delete_many( { "Quantity" : 0 } )
     return True
 
 def add_sales(dicts):#Add a document in sale Records
@@ -53,14 +53,8 @@ def add_item(dicts):#Add a document in Inventory
         return False
 
 def add_purchase(dicts):#Add a document in purchase record and returns Boolean
-    try:
-        purchase.insert(dicts)
-        return True
-    except:
-        return False
-
-def get_data():#Returns all the inventory Records from Database
-    return inventory.find({})
+    purchase.insert(dicts)
+    return True
 
 def get_sales(querry = {}): #Returns all the sale Records from Database
     return sales.find(querry).sort([('Date',pymongo.DESCENDING)])
@@ -76,23 +70,16 @@ def get_comp(prod, var): #Shortlisting Brand names from crops and varieties, use
     arr =inventory.distinct("Brand",{"Productname": prod, "Variety":var})
     return arr
 
+def get_expiry(prod, var, brand): #Shortlisting Brand names from crops and varieties, used for dropdown menus
+    arr =inventory.distinct("expiry",{"Productname": prod, "Variety":var, "Brand": brand})
+    return arr
+
 def get_productname():#Getting all the product names in the inventory
     arr = [('',"Choose")]
     for i in inventory.distinct('Productname'):
         tup = ( i , i )
         arr.append(tup)
     return arr
-
-def addQuantity(prd, var, comp, q , w): #adding Quantity in existing item 
-    try:
-        arr = inventory.find({"Productname":prd,"Variety": var,"Brand":comp, "Warehouse": w} )
-        new_quantity = arr[0]['Quantity'] + q
-        if new_quantity < 0:
-            return (arr[0]['Quantity'])
-        result = inventory.update_one({"Productname":prd,"Variety": var,"Brand":comp} ,{ '$set' : {'Quantity': (new_quantity) } })
-        return result.matched_count > 0 
-    except:
-        return False
 
 def getTodaysPurchaserRecords(querry): #Returns total amount of purchase and total records of purchase of present day
     arr = []
@@ -132,7 +119,8 @@ class sform(FlaskForm): #Sales form class
     product = SelectField('Select Crop',[validators.DataRequired("Please Select Crop.")] ,choices = [])
     variety = SelectField('Select Variety',[validators.DataRequired("Please Select Variety.")], choices = [])
     Brand = SelectField('Select Brand',[validators.DataRequired("Please Select Brand.")], choices = [])     
-     
+    expiry = SelectField('Select Expiry',[validators.DataRequired("Please Select Expiry.")], choices = [])
+
     name = TextField("Customer Name ",[validators.DataRequired("Please enter Name.")])
     country = TextField("Customer country ",[validators.DataRequired("Please enter country.")])  
     c_comp = TextField("Company",[validators.DataRequired("Please enter customer's Brand name.")])  
@@ -143,8 +131,7 @@ class sform(FlaskForm): #Sales form class
 
     phone = IntegerField("Phone",[validators.DataRequired("Please enter Phone Number.")])
 
-    quan = IntegerField("Quantity",[validators.DataRequired("Please enter Quantity in Kilograms.")])  
-    warehouse = IntegerField("Warehouse #",[validators.DataRequired("Please enter Warehouse #.")])
+    quan = DecimalField("Quantity", [validators.DataRequired("Please enter Quantity in Kilograms.")])  
 
     transaction = SelectField('Select Cash/Credit',[validators.DataRequired("Please Select Cash/Credit.")], choices = [('Cash','Cash'),('Credit','Credit')])
   
@@ -155,18 +142,15 @@ class addinform(FlaskForm): #Form class for adding Quantity in existing item
     variety = SelectField('Select Variety',[validators.DataRequired("Please Select Variety.")], choices = [])
     Brand = SelectField('Select Brand',[validators.DataRequired("Please Select Brand.")], choices = [])     
     price  = IntegerField("Purchase price per KG",[validators.DataRequired("Please enter price.")])
-    quan = IntegerField("Quantity",[validators.DataRequired("Please enter Quantity in Kilograms.")])  
+    quan = DecimalField("Quantity",[validators.DataRequired("Please enter Quantity in Kilograms.")])  
 
     name = TextField("Name ",[validators.DataRequired("Please enter Name.")])
     country = TextField("country ",[validators.DataRequired("Please enter country.")])  
     c_comp = TextField("Company",[validators.DataRequired("Please enter customer's Brand name.")])  
 
 
-    expiry = DateField('Expiry Date', format='%m/%d/%Y')
-    manufacture = DateField('Manufacture Date', format='%m/%d/%Y')
-
-
-    warehouse = IntegerField("Warehouse #",[validators.DataRequired("Please enter Warehouse.")])  
+    expiry = DateTimeField('Expiry Date', format='%m/%d/%Y')
+    manufacture = DateTimeField('Manufacture Date', format='%m/%d/%Y')
        
     transaction = SelectField('Select Cash/Credit',[validators.DataRequired("Please Select Cash/Credit.")], choices = [('Cash','Cash'),('Credit','Credit')])
 
@@ -180,12 +164,13 @@ class addnewform(FlaskForm): #Form class for adding a new item in inventory
     product = TextField('Crop Name',[validators.DataRequired("Please insert Crop.")])
     variety = TextField('Variety',[validators.DataRequired("Please insert Variety.")])
     Brand = TextField('Brand',[validators.DataRequired("Please insert Brand.")])     
-    price  = IntegerField("Purchase price per KG",[validators.DataRequired("Please enter price.")])
-    quan = IntegerField("Quantity",[validators.DataRequired("Please enter Quantity.")])
-    warehouse = IntegerField("Warehouse #",[validators.DataRequired("Please enter Warehouse.")])  
- 
-    expiry = DateField('Expiry Date', format='%m/%d/%Y')
-    manufacture = DateField('Manufacture Date', format='%m/%d/%Y')
+    price  = IntegerField("Purchase price Total",[validators.DataRequired("Please enter price.")])
+    quan = DecimalField("Quantity",[validators.DataRequired("Please enter Quantity.")])
+
+    priceperkg  = IntegerField("Purchase price per KG",[validators.DataRequired("Please enter per KG price.")])
+
+    expiry = DateTimeField('Expiry Date', format='%m/%d/%Y')
+    manufacture = DateTimeField('Manufacture Date', format='%m/%d/%Y')
 
     name = TextField("Name ",[validators.DataRequired("Please enter Name.")])
     country = TextField("country ",[validators.DataRequired("Please enter country.")])  
@@ -208,28 +193,30 @@ class searchform(FlaskForm): #Form class for adding a new item in inventory
 
     submit2 = SubmitField("Submit")
 
-
 def getQuantityFromWh():
-    arr = []
-    s = inventory.find({"Warehouse": 1})
-    c=0
-    for i in s:
-        c+=i['Quantity']
-    arr.append(c)
+    try:
+        arr = []
+        cursor = sales.aggregate([ { '$group': { '_id': None, 'tot': { '$sum': '$amount_paid' } } } ])
+        total = 0
+        for i in cursor:
+            total = (i['tot'])
+        arr.append(total)
 
-    s = inventory.find({"Warehouse": 2})
-    c=0
-    for i in s:
-        c+=i['Quantity']
-    arr.append(c)
-
-    s = inventory.find({"Warehouse": 3})
-    c=0
-    for i in s:
-        c+=i['Quantity']
-    arr.append(c)
-    return arr
-
+        cursor = purchase.aggregate([ { '$group': { '_id': None, 'tot': { '$sum': '$amount_paid' } } } ])
+        total = 0
+        for i in cursor:
+            total = (i['tot'])
+        arr.append(total)
+        
+        cursor = expense.aggregate([ { '$group': { '_id': None, 'tot': { '$sum': '$Amount' } } } ])
+        total = 0
+        for i in cursor:
+            total = (i['tot'])
+        arr.append(total)
+        profit = arr[0] - (arr[1] + arr[2])
+        return (arr, profit)
+    except:
+        return ([0,0,0], 0 )
 
 def foo():
     def getLast6Month(days):
@@ -246,13 +233,38 @@ def getSalesOf6Months():
     tot = []
     for i in foo():
         querry = {'$lt':i+timedelta(30), '$gt': i}
-        cursor = sales.find({"Date":querry })
+        cursor = sales.aggregate([{'$match':{"Date":querry }},
+        { '$group': { '_id': None, 'tot': { '$sum': '$Total' } } }
+        ])
         total = 0
         for i in cursor:
-            total+=i['Total']
+            total=i['tot']
         arr.append(querry['$gt'].strftime('%b-%y') + ' Sales :' )
         tot.append(total)
     return (arr, tot)
 
 def sauda_():
     return mydb["sauda"]
+
+
+def profitformonth(date):
+    arr = []
+    cursor = sales.aggregate([ {'$match': {'Date': {'$gte': date}}} , { '$group': { '_id': None, 'tot': { '$sum': '$amount_paid' } } } ])
+    total = 0
+    for i in cursor:
+        total = (i['tot'])
+    arr.append(total)
+
+    cursor = purchase.aggregate([ {'$match': {'Date': {'$gte': date}}} , { '$group': { '_id': None, 'tot': { '$sum': '$amount_paid' } } } ])
+    total = 0
+    for i in cursor:
+        total = (i['tot'])
+    arr.append(total)
+
+    cursor = expense.aggregate([ {'$match': {'Date': {'$gte': date}}} , { '$group': { '_id': None, 'tot': { '$sum': '$Amount' } } } ])
+    total = 0
+    for i in cursor:
+        total = (i['tot'])
+    arr.append(total)
+    profit = arr[0] - (arr[1] + arr[2])
+    return profit

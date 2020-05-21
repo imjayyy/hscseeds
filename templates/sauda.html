@@ -28,14 +28,16 @@
                   <div class="w3-row">
                     <div class="w3-col s3">{{ form.name.label}} {{ form.name }} </div> 
                     <div class="w3-col s3">{{ form.phone.label}} {{ form.phone }}  </div>
+                    <div class="w3-col s3">{{ form.country.label}} {{ form.country }}  </div>
                     <div class="w3-col s3">{{ form.c_comp.label}}  {{ form.c_comp }}  </div>
+                    <div class="w3-col s3"> Date:   <input type="text" name ="date" class="datepicker">  </div>
                     <br>
                 <div class="w3-row">
                     <br>
 
                     <div class="w3-col s3" style="width:'100px';">{{ form.description.label}}   {{ form.description }}    </div>
 
-                    <input type="submit" name="Add Sauda" value="Add Sauda">
+                    <button type="submit" name="Add Sauda" value="Add Sauda">Add Sauda</button>
              </div>
          </div>
             </div>  
@@ -52,14 +54,14 @@
                <br>
                 <div class="w3-container">
                   <div class="w3-row">
-                    <div class="w3-col s3">{{ form.name.label}} {{ form.name }} </div> 
-                    <div class="w3-col s3">{{ form.phone.label}} {{ form.phone }}  </div>
-                    <div class="w3-col s3">{{ form.c_comp.label}}  {{ form.c_comp }}  </div>
-                    <div class="w3-col s3">{{ form.description.label}}   {{ form.description }}    </div>
+                    <p class="w3-col s3">Name:  <input type="text" name="name1" ></p>
+                    <p class="w3-col s3">Phone: <input type="text" name="phone"></p>
+                    <p class="w3-col s3">Company: <input type="text" name="company"></p>
+                    <p class="w3-col s3"><button   type="submit" name="Search" value="Search">Search</button></p>
+
                     <br>
                 <div class="w3-row">
                     <br>
-               <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button>
              </div>
          </div>
             </div>  
@@ -71,7 +73,7 @@
 <center><div class= "w3-card-4 w3-green w3-round">
     <div class="w3-col-md-4"></div>
     <div class="w3-col-md-4 w3-green container-fluid w3-round ">
-        <h1 >Sauda Records.!!!</h1>
+        <h1 >Sauda Records.!!!</h1> 
     </div>
 </div>
 </center>
@@ -85,7 +87,7 @@
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer's country </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Phone</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Company name</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Description</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green" style="width: 70%;">Description</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Date</td>
 
 
@@ -99,15 +101,14 @@
                <td class="w3-panel w3-border w3-round">{{ cl['Phone'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Company'] }}</td>               
                <td class="w3-panel w3-border w3-round">{{ cl['Description'] }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%b-%Y') }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d/%b/%y') }}</td>
 
                
             </tr>
             {% endfor %}
         </table>
-        <a href="/logout">
-        <button type="button" class="btn btn-primary btn-block" onclick= "window.location.href={{ redirect(url_for('logout')) }};"> LOG OUT </button>
-        </a>
+        <div class="pagination">{{ pagination.links }}</div>
+
                 </center>
 
 

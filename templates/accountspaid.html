@@ -1,6 +1,16 @@
 {% include 'header.html' %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="/Content/font-awesome/css/font-awesome.min.css" >
+
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/jszip.min.js"></script>
+
+
 
 
     {% for message in form.name.errors %}  
@@ -21,7 +31,7 @@
                 <a href="/recieved"><button class="w3-button w3-green">Accounts Recieved</button></a>
         </center>
 
-        <center><h1>Accounts Summary</h1></center>
+        <!-- <center><h1>Accounts Summary</h1></center> -->
 
     <center>
         <div class="w3-container w3-margin">
@@ -29,45 +39,38 @@
               <div class="w3-col s1"></div>
                 <div class="w3 row w3-light-grey">
                     <div class="w3 col s6 w3-card-4 w3-margin ">
-                    <h2 >Total Debts on HSC : {{debt_amount}}</h2>
-                    <h3>Total Creditors: {{ debitors }}</h3>
+                    <h2 >Total Expenses : {{ expenses }}</h2>
+                    <h2 >{{ name  }}</h2>
+                    <h2> {{ total }}</h2>
+
+
                     <h1 class=" w3-padding-16"></h1> 
                     </div>
-                
-                    <div class=" w3 col s6 w3-card-4 w3-margin">
-                    <h2 >Total Recievable : {{ credit_amount }}</h2>
-                    <h3>Total Debitors: {{ creditors }}</h3>
-                  <h1 class="w3-padding-16"></h1>   
-                </div> 
                 </div>
             </div>
         </div>
     </center>
 
-        <form method = "POST" class="w3-input">  
-           
-            {{ form.hidden_tag() }}  
-                <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
-                   <br>
-                    <div class="w3-container">
-                      <div class="w3-row">
-                        <p class="w3-col s3"> {{ form.transaction.label}}   {{ form.transaction }}  </p>
-                        <p class="w3-col s3">Name:  <input type="text" name="name1" ></p>
-                        <p class="w3-col s3">Phone: <input type="text" name="phone"></p>
-                        <p class="w3-col s3">From Date: <input type="text" name ="from" class="datepicker"></p>
-                        <p class="w3-col s3">To Date: <input type="text" name = "to" class="datepicker"></p>
-                    <div class="w3-row">
-                        <br>
-    
-    
-                   <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button><br>
-                 </div>
-             </div>
-                </div>  
-                  
-             </fieldset>  
-      </form>  
+        <form method = "POST" class="w3-input">                
+            <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
+               <br>
+                <div class="w3-container">
+                  <div class="w3-row">
+                    <p class="w3-col s3">Name:  <input type="text" name="name1" ></p>
+                    <p class="w3-col s3">Phone: <input type="text" name="phone"></p>
+                    <p class="w3-col s3">From Date: <input type="text" name ="from" class="datepicker"></p>
+                    <p class="w3-col s3">To Date: <input type="text" name = "to" class="datepicker"></p>
+                <div class="w3-row">
+                    <br>
 
+
+               <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button><br>
+             </div>
+         </div>
+            </div>  
+              
+         </fieldset>  
+      </form>  
 
 <center><div class= "w3-card-4 w3-green w3-round">
     <div class="w3-col-md-4"></div>
@@ -77,23 +80,24 @@
 </div>
 </center>
 <div class="container">
+    <button id="exportButton" class="btn btn-lg btn-danger clearfix"><span class="fa fa-file-pdf-o"></span> Export to PDF</button>
+
     <div class="row  w3-container w3-margin-right">
         <div class="col-md-4 col-md-offset-4">
         <center>
-        <table class="w3-table w3-striped  w3-margin w3-margin-right w3-margin-left">
+        <table  id="exportTable" class="table table-hover">
                 <tr>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer Name </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer_Name </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product Name </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Country </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
-			            <!-- <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td> -->
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Company name</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Phone</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Total Price</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Date</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Transaction</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Remaining Amount</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Paid Amount</td>
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Action</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Remaining_Amount</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Paid_Amount</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Description</td>
 
 
                      </tr>
@@ -105,22 +109,16 @@
                <td class="w3-panel w3-border w3-round">{{ cl['Productname'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['country'] }}</td>      
                <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
-               <!-- <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>                -->
-               <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Phone'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Total']) }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%b-%Y') }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['transaction'] }}</td>
-
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['amount_remaining']) }}</td>
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['amount_paid']) }}</td>
 
-               <a href="/transaction/{{cl['_id']|string }}/{{ but_action }}"> Records </a>  
-
                <td class="w3-panel w3-border w3-round">
 
-                   <input type="number" placeholder="Amount" id="{{ cl['_id']|string + 'Amount' }}"> 
-                   <input type="text" placeholder="Description" id="{{cl['_id']|string }}"> 
-                   <button value="123" type="submit" onclick=" javascript:changeStatus('{{cl['_id']|string}}') "> {{ but_action }} </button>   
+                   <a href="/transaction/{{cl['_id']|string }}/{{ but_action }}"> Transactions </a>   
 
                 </td>
 
@@ -128,8 +126,7 @@
             </tr>
             {% endfor %}
         </table>
-
-        </center>
+    </center>
 
 
     </div>
@@ -138,11 +135,25 @@
 </div>
 
 <script type="text/javascript">
+    function printtoPdf(_id){
+        fetch('/printtoPDF/'+  (_id) + '/' + {{ but_action }} );   
+    };
+
+</script>
+
+
+
+<script type="text/javascript">
     function changeStatus(_id){
         var desc   = document.getElementById(_id).value;    
         var number = document.getElementById(_id + 'Amount').value;
         fetch('/changeStatusToPaid/'+ "{{ but_action }}" + '/' + (_id) + '/' + number + '/' + desc  );   
         location.reload(true);
     };
-
 </script>
+
+<style>
+    #exportButton {
+        border-radius: 0;
+    }
+</style>

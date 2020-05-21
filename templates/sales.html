@@ -18,26 +18,17 @@
         {% endwith %}
 
 
-        <form method = "POST" class="w3-input">  
-           
-            {{ form.hidden_tag() }}  
-              
+        <form method = "POST" class="w3-input">                
             <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
                <br>
                 <div class="w3-container">
                   <div class="w3-row">
-                    <div class="w3-col s3">{{ form.product.label}} {{ form.product }} </div> 
-                    <div class="w3-col s3">{{ form.variety.label}} {{ form.variety }}  </div>
-                    <div class="w3-col s3">{{ form.Brand.label}}  {{ form.Brand }}  </div>
-                    <div class="w3-col s3">{{ form.name.label}}   {{ form.name }}    </div>
-                    <br>
-                <div class="w3-row">
-                    <br>
-
-               <div class="w3-col s3">{{ form.country.label}}   {{ form.country }}  </div>
-               <div class="w3-col s3">{{ form.c_comp.label}} {{ form.c_comp }}  </div>
-               <div class="w3-col s3"> {{ form.transaction.label}}   {{ form.transaction }}  </div>
-               <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button>
+                    <p class="w3-col s3">Name:  <input type="text" name="name1" ></p>
+                    <p class="w3-col s3">Phone: <input type="text" name="phone"></p>
+                    <p class="w3-col s3">From Date: <input type="text" name ="from" class="datepicker"></p>
+                    <p class="w3-col s3">To Date: <input type="text" name = "to" class="datepicker"></p>
+                <div class="w3-row"><br>
+               <button class="w3-col s3 w3-button w3-green w3-hover-green">Search Records</button><br>
              </div>
          </div>
             </div>  
@@ -60,6 +51,8 @@
         <table class="w3-table w3-striped  w3-margin w3-margin-right w3-margin-left">
                 <tr>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer Name </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Phone </td>
+
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product Name </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer's country </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
@@ -76,12 +69,14 @@
 
 
                <td class="w3-panel w3-border w3-round">{{ cl['Name'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Phone'] }}</td>
+
                <td class="w3-panel w3-border w3-round">{{ cl['Productname'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['country'] }}</td>      
                <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>               
                <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
-               <td class="w3-panel w3-border w3-round">{{ cl['Total'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Total']) }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%b-%Y') }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['transaction'] }}</td>
 
@@ -89,9 +84,6 @@
             </tr>
             {% endfor %}
         </table>
-        <a href="/logout">
-        <button type="button" class="btn btn-primary btn-block" onclick= "window.location.href={{ redirect(url_for('logout')) }};"> LOG OUT </button>
-        </a>
                 </center>
 
 

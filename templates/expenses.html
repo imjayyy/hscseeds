@@ -1,0 +1,91 @@
+{% include 'header.html' %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
+
+
+        <form method = "POST" class="w3-input">  
+                         
+            <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
+               <br>
+                <div class="w3-container">
+                  <div class="w3-row">
+                    <div class="w3-col s3"> Amount <input type="number" name="amount"> </div> 
+                    <div class="w3-col s3">Description <input type="text" name="Description" style="width:'70%';">  </div>
+                    <div class="w3-col s3"> Date:   <input type="text" name ="date" class="datepicker">  </div>
+                    <input type="submit" name="Add Expense" value="Add Expense" class="w3-button w3-border w3-hover-green">
+                    <br><br><br>
+             </div>
+         </div>
+            </div>  
+              
+         </fieldset>  
+      </form>  </div>
+
+
+        <form method = "POST" class="w3-input">  
+                         
+            <div class="w3-container w3-margin w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">  
+               <br>
+                <div class="w3-container">
+                  <div class="w3-row">
+                    <p class="w3-col s3">Description:  <input type="text" name="description" ></p>
+                    <p class="w3-col s3">Amount: <input type="text" name="amount"></p>                    
+          
+                    <button type="submit" name="Search" value="Search">Search</button> 
+                                       <br><br>
+
+               <br>
+             </div>
+         </div>
+            </div>  
+              
+         </fieldset>  
+      </form>  
+
+
+<center><div class= "w3-card-4 w3-green w3-round">
+    <div class="w3-col-md-4"></div>
+    <div class="w3-col-md-4 w3-green container-fluid w3-round ">
+        <h1 >Expenses Records.!!!</h1>
+    </div>
+</div>
+</center>
+<div class="container">
+    <div class="row  w3-container w3-margin-right">
+        <div class="col-md-4 col-md-offset-4">
+        <center>
+        <table class="w3-table w3-striped  w3-margin w3-margin-right w3-margin-left">
+                <tr>
+                  {{ pagination.info }}                
+
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green"> Index </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green" style="width: 80%;">Description </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Amount </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Date</td>
+
+                     </tr>
+            <tr>
+            
+            {% for cl in arr %}
+
+                <td class="w3-panel w3-border w3-round"> {{ loop.index + pagination.skip }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Description'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Amount']) }}</td>      
+               <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d/%b/%y') }}</td>
+               
+            </tr>
+            {% endfor %}
+
+        </table>
+                </center>
+               
+                <div class="pagination">{{ pagination.links }}</div>
+
+
+    </div>
+
+    </div>
+</div> 
+
