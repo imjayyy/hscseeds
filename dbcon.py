@@ -1,4 +1,5 @@
 from datetime import date, datetime,timedelta
+from dateutil.relativedelta import relativedelta
 
 import pymongo
 from flask_wtf import FlaskForm
@@ -220,26 +221,28 @@ def getQuantityFromWh():
 
 def foo():
     def getLast6Month(days):
-        return(datetime.now() - timedelta(days=days))
+        return(date.today() + relativedelta(months=-days))
     
     days = 0
 
     for i in range(6):
-        days += 30
-        yield(getLast6Month(days))
+        yield(getLast6Month(i))
 
 def getSalesOf6Months():
     arr = []  
     tot = []
     for i in foo():
-        querry = {'$lt':i+timedelta(30), '$gt': i}
+        month = (i.strftime('%b-%y'))
+        startdate = datetime.strptime('01-'+month, '%d-%b-%y')
+        querry = {'$lt':startdate - relativedelta(months=-1), '$gt': startdate}
+        print(querry)
         cursor = sales.aggregate([{'$match':{"Date":querry }},
         { '$group': { '_id': None, 'tot': { '$sum': '$Total' } } }
         ])
         total = 0
         for i in cursor:
             total=i['tot']
-        arr.append(querry['$gt'].strftime('%b-%y') + ' Sales :' )
+        arr.append(querry['$gt'].strftime('%b-%y'))
         tot.append(total)
     return (arr, tot)
 
