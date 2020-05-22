@@ -31,6 +31,7 @@
     					<td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Brand name</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Expiry</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Purchase Price/KG</td>                        
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Current cost</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Total Purchase Price</td>
@@ -43,6 +44,7 @@
                <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>               
                <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['expiry'].strftime('%d/%m/%y') }}</td>
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['PriceperKG']) }}</td>
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Quantity']*cl["PriceperKG"]) }}</td>
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Total']) }}</td>

@@ -299,10 +299,17 @@ def home():
     for i in a:
         ex = i['tot']
 
+    a= db.sales.aggregate([{'$match': { 'amount_remaining': { '$gt': 0 } }},
+                    {'$group' : {'_id' : '$Name', "count" : {'$sum' : '$amount_remaining'}}},
+                    {'$sort' : {"count" : -1}}, {'$limit' : 5}])
+    creditss=[]
+    for i in a:
+        creditss.append((i['_id'], i['count']))
+
 
     return render_template('home.html', max=17000, 
     set = zip(values, labels, colors ), profit = profit, max2 = max2, labels=bar_labels, values=bar_values, products = products, ex = ex, month_profit = profitformonth(date),
-    total_inventory=tot)
+    creditss=creditss,  total_inventory=tot)
 
 @app.route("/inventory", methods=['Post','GET'])
 def inventory():
@@ -567,28 +574,36 @@ def reports():
 
     var1, var2 = "Today's Total Purchase:", "Today's Total Sale:"
 
+    arr1 = ['Productname',	'Variety',	"Brand",	'Amount',	'Quantity',	'Seller']
+    arr2 = ['Productname',	'Variety',	"Brand",	'Amount',	'Quantity',	'Buyer']
+    
+
     return render_template('reports.html', purchase_amount=purchase_amount, 
                                         purchase_records=purchase_records, 
                                         sale_amount = sale_amount, 
                                         sale_records = sale_records,
-                                        var1 = var1, var2 = var2,
+                                        arr1 = arr1, arr2 = arr2,
                                         format = format)
 
 @app.route("/restock")
 def restock():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    querry = {'$lte': datetime.today(), '$gte': datetime.today()-timedelta(30)}
+    querry = {'$lte': datetime.today()+timedelta(150)}
     inventoryfun = inventoryfunc()
     nearexpiry, expireamount = inventoryfun.find({"expiry":querry}), inventoryfun.count_documents({"expiry":querry})    
     # sale_amount = 'Rs. ' + str((format (sale_amount, ',d'))) + '/-'
     var2, var1 = "Out of Stock:", "About to Expire:"
+
+    arr1 = ['Productname',	'Variety',	"Brand",	'Quantity',	'expiry']
+    arr2 = ['Productname',	'Variety',	"Brand",	'Quantity',	'expiry']
 
     return render_template('reports.html', purchase_amount=expireamount, 
                                         purchase_records= nearexpiry, 
                                         sale_amount=getOutOfStock(1000).count(), 
                                         sale_records = getOutOfStock(1000),
                                         var1 = var1, var2 = var2,
+                                        arr1 = arr1, arr2 = arr2,
                                         format = format)
 
 @app.route('/logout')
@@ -670,7 +685,11 @@ def transaction(ID, account):
     'Total', 'PriceperKG', 'expiry', 
     'manufacture', 'transaction', 'Date', 
     'amount_remaining', 'amount_paid']
-        
+
+    arr2 = ['Name', 'country', 'Phone', 'Company', 'Quantity', 
+    'Total', 'transaction', 'Date', 
+    'amount_remaining', 'amount_paid']
+    
     if account == 'Recieve':
         var = 'Sales'
         cursor = db.sales.find_one({'_id': ObjectId(ID)} )
@@ -678,7 +697,7 @@ def transaction(ID, account):
         for i in cursor:
             desc = cursor['Description']
 
-        return render_template('transaction.html', arr = cursor, arr2 = arr, desc = desc, var =var )
+        return render_template('transaction.html', arr = cursor, arr2 = arr2, desc = desc, var =var )
     if account == 'Pay':
         var = 'Purchase'
         cursor = db.purchase.find_one({'_id': ObjectId(ID)} )

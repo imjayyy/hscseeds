@@ -128,7 +128,13 @@
 										{% endfor %}
 
 										</div>
-										
+										<div class="w3-col">
+											<h1>Top Credits :</h1>
+											{% for i in creditss %}
+												<h2> {{ i[0] }} : Rs.{{ '{:,}'.format(i[1]) }}/.</h2>
+											{% endfor %}
+	
+											</div>
 								
 									<br><br><br>
 

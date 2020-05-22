@@ -54,21 +54,20 @@
                         <div class="w3-row w3-container w3-margin-right">
                             <table class="w3-table w3-striped " >
                                   <tr >
-                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product</td>
-                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
-                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Seed's Brand</td>
-                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Cost</td>
-                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
-                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Seller</td>
+                                    {% for i in arr1%}
+                                    <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">{{i}}</td>
+                                    {% endfor %}
+
                                  </tr>
                                     {% for records in purchase_records %}
                                   <tr>
-                                     <td class="w3-panel w3-border w3-round">{{records['Productname']}}</td>
-                                     <td class="w3-panel w3-border w3-round">{{records['Variety']}}</td>
-                                     <td class="w3-panel w3-border w3-round">{{records['Brand']}}</td>
-                                     <td class="w3-panel w3-border w3-round">{{(records["total Amount"])}}</td>
-                                     <td class="w3-panel w3-border w3-round">{{records['Quantity']}}</td>
-                                     <td class="w3-panel w3-border w3-round">{{records["Company"]}}</td>
+                                     
+                                      {% for i in arr1%}
+                                      {% if i == 'expiry' %}
+                                        <td class="w3-panel w3-border w3-round">{{ records[i].strftime('%b-%y') }}</td>
+                                      {% else %}
+                                        <td class="w3-panel w3-border w3-round">{{records[i]}}</td>
+                                      {% endif %}                                      {% endfor %}
                                  </tr>
                                     {% endfor %}
 
@@ -88,21 +87,22 @@
 
                           <table class="w3-table w3-striped ">
                                 <tr >
-                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product</td>
-                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td>
-                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Seed's Brand</td>
-                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Amount</td>
-                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
-                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Buyer</td>
+                                  {% for i in arr2%}
+                                  <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">{{i}}</td>
+                                  {% endfor %}
+
                                </tr>
                                   {% for records in sale_records %}
                                 <tr>
-                                   <td class="w3-panel w3-border w3-round">{{records['Productname']}}</td>
-                                   <td class="w3-panel w3-border w3-round">{{records['Variety']}}</td>
-                                   <td class="w3-panel w3-border w3-round">{{records['Brand']}}</td>
-                                   <td class="w3-panel w3-border w3-round">{{records["total"]}}</td>
-                                   <td class="w3-panel w3-border w3-round">{{records['Quantity']}}</td>
-                                   <td class="w3-panel w3-border w3-round">{{records["Company"]}}</td>
+                                   
+                                   {% for i in arr2%}
+                                      {% if i == 'expiry' %}
+                                        <td class="w3-panel w3-border w3-round">{{ records[i].strftime('%b-%y') }}</td>
+                                      {% else %}
+                                        <td class="w3-panel w3-border w3-round">{{records[i]}}</td>
+                                      {% endif %}
+
+                                   {% endfor %}
                                </tr>
                                   {% endfor %}
 

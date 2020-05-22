@@ -83,11 +83,13 @@
         <table class="w3-table w3-striped  w3-margin w3-margin-right w3-margin-left">
                 <tr>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Customer Name </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Phone </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Company name</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Product Name </td>
+                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Brand </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Country </td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Quantity</td>
 			            <!-- <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Variety</td> -->
-                        <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Company name</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Total Price</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Date</td>
                         <td class="w3-panel w3-border w3-round w3-topbar w3-bottombar w3-border-green">Transaction</td>
@@ -102,11 +104,14 @@
 
 
                <td class="w3-panel w3-border w3-round">{{ cl['Name'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Phone'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Company'] }}</td>
+
                <td class="w3-panel w3-border w3-round">{{ cl['Productname'] }}</td>
+               <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
+
                <td class="w3-panel w3-border w3-round">{{ cl['country'] }}</td>      
                <td class="w3-panel w3-border w3-round">{{ cl['Quantity'] }}</td>
-               <!-- <td class="w3-panel w3-border w3-round">{{ cl['Variety'] }}</td>                -->
-               <td class="w3-panel w3-border w3-round">{{ cl['Brand'] }}</td>
                <td class="w3-panel w3-border w3-round">{{ '{:,}'.format(cl['Total']) }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['Date'].strftime('%d-%b-%Y') }}</td>
                <td class="w3-panel w3-border w3-round">{{ cl['transaction'] }}</td>
